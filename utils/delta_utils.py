@@ -39,15 +39,20 @@ def generate_where_clause(df, column_list: List[str]):
     for c in column_list:
 
         unique_values = df.select(c).distinct().rdd.flatMap(lambda x: x).collect()
+        dt = str(df.schema[c].dataType).lower()
+
+        if 'date' in dt or 'timestamp' in dt:
+            unique_values = [str(uv) for uv in unique_values]
 
         if not unique_values:
             continue
 
-        if len(unique_values) == 1:
+        if len(unique_values) == 1 and ('string' in dt or 'date' in dt or 'timestamp' in dt):
             where_clause.append(f"{c} = '{unique_values[0]}'")
+        elif len(unique_values) == 1:
+            where_clause.append(f"{c} = {unique_values[0]}")
         else:
-            values_str = "', '".join([str(v) for v in unique_values])
-            where_clause.append(f"{c} in ('{values_str}')")
+            where_clause.append(f"{c} in {str(tuple(unique_values))}")
 
     return where_clause
 

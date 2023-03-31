@@ -1,4 +1,4 @@
-import urllib
+import urllib.parse
 import json
 
 def get_json_from_url(url: str):

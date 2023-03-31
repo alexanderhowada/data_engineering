@@ -79,7 +79,7 @@ def merge(df, target_table, pk, spark_session=None, partition=[]):
         dt = DeltaTable.forName(spark, target_table)
 
         condition = [f't.{k}=s.{k}' for k in pk]
-        condition += generate_where_clause(df, partition)
+        condition += ['t.'+ wc for wc in generate_where_clause(df, partition)]
         condition = ' and '.join(condition)
 
         dt.alias('t').merge(

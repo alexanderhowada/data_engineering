@@ -41,7 +41,8 @@ class SupermetricsAPI:
         retry_strategy = Retry(
             total=3,
             status_forcelist=[429, 500, 502, 503, 504],
-            backoff_factor=1
+            backoff_factor=5,
+            raise_on_status=False
         )
 
         self.adapter = HTTPAdapter(max_retries=retry_strategy)

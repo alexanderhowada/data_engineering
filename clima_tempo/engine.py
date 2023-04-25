@@ -1,6 +1,8 @@
 import sys
 sys.path.append('../')
 
+from typing import List
+
 from utils.url_utils import BaseAPI
 
 
@@ -14,12 +16,18 @@ class ClimaTempoAPI(BaseAPI):
         'register_id': base + '/api-manager/user-token/{token}/locales'
     }
 
-    def __init__(self, token, *args, **kwargs):
+    def __init__(self, token: str, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
         self.token = token
 
     def _prepare_params(self, params: dict = {}):
+        """
+        Add token to the requests parameters.
+
+        :param params:
+        :return: dict.
+        """
 
         if 'token' not in params.keys():
             params['token'] = self.token
@@ -27,6 +35,13 @@ class ClimaTempoAPI(BaseAPI):
         return params
 
     def get_request(self, url: str, **r_kwargs):
+        """
+        Get data from URL and add token to the parameters.
+
+        :param url: URL for requests.get.
+        :param r_kwargs: kwargs for requests.
+        :return: requests.get
+        """
 
         if 'params' not in r_kwargs.keys():
             r_kwargs['params'] = self._prepare_params()
@@ -36,7 +51,14 @@ class ClimaTempoAPI(BaseAPI):
         return super().get_request(url, **r_kwargs)
 
 
-    def forecast_72(self, city_ids, **r_kwargs):
+    def forecast_72(self, city_ids: List, **r_kwargs):
+        """
+        Get 72h forecasting for each city in city_ids.
+
+        :param city_ids: list with city ids.
+        :param r_kwargs: kwargs for requests.get.
+        :return: requests.get.
+        """
 
         json_list = []
 
@@ -46,7 +68,14 @@ class ClimaTempoAPI(BaseAPI):
 
         return json_list
 
-    def register_id(self, city_ids, **p_kwargs):
+    def register_id(self, city_ids: List, **p_kwargs):
+        """
+        Register city_id to token.
+
+        :param city_ids: list with city ids.
+        :param p_kwargs: kwargs for requests.put.
+        :return: requests.put.
+        """
 
         put_list = []
 
@@ -57,12 +86,12 @@ class ClimaTempoAPI(BaseAPI):
         return put_list
 
 
-
-
 if __name__ == '__main__':
 
     import os
+    from dotenv import load_dotenv
 
+    load_dotenv()
     TOKEN = os.environ['TOKEN']
 
     api = ClimaTempoAPI(TOKEN)
@@ -75,7 +104,7 @@ if __name__ == '__main__':
     #         'country': 'BR'
     #     }
     # }
-    #
+
     # j = api.get_json('list_cities', **r_kwargs)
     # print(j)
 

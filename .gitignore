@@ -1,0 +1,11 @@
+*.csv
+*/datasets/*
+__*__
+*.log
+metastore_db
+pyspark_tables
+data
+*checkpoints*
+*.mp4
+.*
+*.txt

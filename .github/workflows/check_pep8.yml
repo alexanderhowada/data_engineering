@@ -11,9 +11,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: checkout
-        uses: actions/checkout@master
+        uses: actions/checkout@v3
         with:
-          ref: ${{github.ref}}
+          ref: ${{ github.ref }}
+        run: echo ${{github.ref}}
 
       - name: pip install
         run: pip3 install pycodestyle

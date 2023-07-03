@@ -15,17 +15,8 @@ jobs:
         with:
           ref: ${{ github.head_ref }}
 
-      - name: print branch
-        run: echo "Branch name ${{ github.head_ref }}"
-
       - name: pip install
         run: pip3 install pycodestyle
-
-      - name: list
-        run: ls
-
-      - name: pwd
-        run: pwd
 
       - name: run pycodestyle
         run: pycodestyle --max-line-length=120 clima_tempo/engine.py

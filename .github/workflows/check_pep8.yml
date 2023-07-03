@@ -12,9 +12,11 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v3
-        run: echo ${{github.ref}}
         with:
           ref: ${{ github.ref }}
+
+      - name: print branch
+        run: echo "Branch name ${{ github.ref }}"
 
       - name: pip install
         run: pip3 install pycodestyle

@@ -1,0 +1,31 @@
+name: Check PEP 8
+
+on:
+  pull_request_target:
+    branches:
+      - main
+
+jobs:
+  check_pep8:
+    name: job check PEP 8
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: set up python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.10
+
+      - name: pip install
+        run: pip3 install pycodestyle
+
+      - name: list
+        run: ls
+
+      - name: pwd
+        run: pwd
+
+      - name: run pycodestyle
+        run: pycodestyle --max-line-length=120 clima_tempo/engine.py

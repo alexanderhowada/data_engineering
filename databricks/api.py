@@ -315,3 +315,24 @@ class DatabricksGitAPI(DatabricksBaseAPI):
 
         return self.request(operation, url, json=j)
 
+
+if __name__ == "__main__":
+
+    import os
+    import json
+
+    import requests
+    from dotenv import load_dotenv
+
+    load_dotenv()
+    PAT = os.getenv("PAT")
+    DATABRICKS_URL = os.getenv("DATABRICKS_URL")
+    ENDPOINT = "api/2.0/instance-pools/list"
+
+    url = DATABRICKS_URL + ENDPOINT
+    print(url)
+
+    h = {"Authorization": f"Bearer {PAT}"}
+    r = requests.get(url, headers=h)
+    print(r.status_code)
+    print(json.dumps(r.json(), indent=4))

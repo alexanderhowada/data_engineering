@@ -15,8 +15,8 @@ jobs:
         with:
           ref: ${{ github.head_ref }}
 
-      - name: pip install
-        run: pip3 install pycodestyle
+      - name: install docker
+        run: apt-get install docker
 
-      - name: run pycodestyle
-        run: pycodestyle --max-line-length=120 clima_tempo/engine.py
+      - name: run test
+        run: bash .github/workflows/check_pep8/run.sh

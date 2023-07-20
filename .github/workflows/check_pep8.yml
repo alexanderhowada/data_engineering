@@ -22,7 +22,10 @@ jobs:
         run: ls * && ls .github/*
 
       - name: install docker
-        run: sudo apt-get update && sudo apt-get install docker -y
+        run: bash .github/workflows/install_docker.sh
+
+      - name: docker version
+        run: docker version
 
       - name:
         run: docker version

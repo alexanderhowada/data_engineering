@@ -16,7 +16,7 @@ jobs:
           ref: ${{ github.head_ref }}
 
       - name: install docker
-        run: apt-get install docker
+        run: sudo apt-get update && sudo apt-get install docker -y
 
       - name: run test
         run: bash .github/workflows/check_pep8/run.sh

@@ -15,6 +15,9 @@ jobs:
         with:
           ref: ${{ github.head_ref }}
 
+      - name:
+        run: docker version
+
       - name: check folder
         run: ls * && ls .github/*
 

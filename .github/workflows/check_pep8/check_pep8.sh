@@ -4,7 +4,7 @@ set -e
 
 # Get the added or modified files.
 diff_files=$(
-  git diff --name-only main ${GITHUB_HEAD_REF} |
+  git diff --name-only origin/main origin/${GITHUB_HEAD_REF} |
   grep -E "^[AM]\s+" |
   grep -E --only-matching "[a-zA-Z_/ \t]+\.py$"
 )

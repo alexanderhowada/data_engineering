@@ -25,4 +25,5 @@ jobs:
         run: pip3 install -r .github/workflows/check_pep8/requirements.txt
 
       - name: run test
-        run: GITHUB_HEAD_REF=${{ vars.GITHUB_HEAD_REF }} bash .github/workflows/check_pep8/check_pep8.sh
+        env: GITHUB_HEAD_REF=${{ vars.GITHUB_HEAD_REF }}
+        run: GITHUB_HEAD_REF=${GITHUB_HEAD_REF} bash .github/workflows/check_pep8/check_pep8.sh

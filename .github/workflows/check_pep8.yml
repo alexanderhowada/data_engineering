@@ -15,12 +15,6 @@ jobs:
         with:
           ref: ${{ github.head_ref }}
 
-      - name: git version
-        run: git version
-
-      - name: install git
-        run: sudo apt-get update && sudo apt-get install --upgrade git -y
-
       - name: install
         run: pip3 install -r .github/workflows/check_pep8/requirements.txt
 

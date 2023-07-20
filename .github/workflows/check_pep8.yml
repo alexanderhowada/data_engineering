@@ -15,6 +15,9 @@ jobs:
         with:
           ref: ${{ github.head_ref }}
 
+      - name: check folder
+        run: ls * && ls .github/*
+
       - name: install docker
         run: sudo apt-get update && sudo apt-get install docker -y
 

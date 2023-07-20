@@ -1,7 +1,5 @@
 #!/bin/bash
 
-set -e
-
 # Get the added or modified files.
 diff_files=$(
   git diff --name-only origin/main origin/${GITHUB_HEAD_REF} |

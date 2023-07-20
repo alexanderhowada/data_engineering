@@ -15,11 +15,8 @@ jobs:
         with:
           ref: ${{ github.head_ref }}
 
-      - name: install docker
-        run: bash .github/workflows/install_docker.sh
-
-      - name: docker version
-        run: docker version
+      - name: install
+        run: pip3 install -r .github/workflows/check_pep8/requirements.txt
 
       - name: run test
-        run: bash .github/workflows/check_pep8/run.sh
+        run: bash .github/workflows/check_pep8/check_pep8.sh

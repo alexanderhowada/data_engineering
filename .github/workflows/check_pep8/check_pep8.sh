@@ -1,8 +1,5 @@
 #!/bin/bash
 
-git branch -a
-git status
-
 diff_files=$(
   git diff --name-status main |
   grep -E "^[AM]\s+" |

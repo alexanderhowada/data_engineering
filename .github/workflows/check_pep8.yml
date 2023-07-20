@@ -15,14 +15,11 @@ jobs:
         with:
           ref: ${{ github.head_ref }}
 
-      - name: setup docker
-        uses: docker/setup-buildx-action@v2
+      - name: install docker
+        run: bash .github/workflows/install_docker.sh
 
       - name: docker version
         run: docker version
-
-      - name: check folder
-        run: ls * && ls .github/*
 
       - name: run test
         run: bash .github/workflows/check_pep8/run.sh

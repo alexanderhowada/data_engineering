@@ -15,11 +15,17 @@ jobs:
         with:
           ref: ${{ github.head_ref }}
 
-      - name: show folder
-        run: ls .github && ls .github/workflows
+      - name:
+        run: docker version
+
+      - name: check folder
+        run: ls * && ls .github/*
 
       - name: install docker
         run: sudo apt-get update && sudo apt-get install docker -y
+
+      - name:
+        run: docker version
 
       - name: run test
         run: bash .github/workflows/check_pep8/run.sh

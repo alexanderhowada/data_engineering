@@ -4,7 +4,7 @@ set -e
 
 # Get the added or modified files.
 diff_files=$(
-  git diff --name-status HEAD..main |
+  git diff --name-status origin/main |
   grep -E "^[AM]\s+" |
   grep -E --only-matching "[a-zA-Z_/ \t]+\.py$"
 )

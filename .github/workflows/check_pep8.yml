@@ -15,8 +15,11 @@ jobs:
         with:
           ref: ${{ github.head_ref }}
 
-      - name:
+      - name: environment
         run: env
+
+      - name: branches
+        run: git branch -a
 
       - name: install
         run: pip3 install -r .github/workflows/check_pep8/requirements.txt

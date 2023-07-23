@@ -39,6 +39,8 @@ class PandasToSparkString(unittest.TestCase):
         )
 
     def test_simple_transformation(self):
+
+        
         df = pandas_to_spark_string(self.pdf1, spark_session=self.spark)
 
         for _, t in df.dtypes:

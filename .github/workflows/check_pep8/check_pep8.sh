@@ -30,9 +30,7 @@ done
 # Exits with status 1 in case of errors.
 # Write an empty file if there is no errors.
 if [ $has_errors=true ]; then
-    chmod 777 $LOG_FILE
     exit 1
 fi
 
 echo "" > $LOG_FILE
-chmod 777 $LOG_FILE

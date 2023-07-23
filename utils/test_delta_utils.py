@@ -19,7 +19,6 @@ class BaseTest(unittest.TestCase):
 
 
     def init_spark(self):
-
         builder = SparkSession.builder \
             .appName('test_delta_utils') \
             .config('spark.sql.warehouse.dir', 'pyspark_tables') \

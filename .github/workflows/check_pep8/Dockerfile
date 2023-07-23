@@ -3,7 +3,7 @@ FROM python:3-slim
 WORKDIR /app
 COPY . /app
 
-RUN apt-get update && apt-get install git -y
+RUN apt-get -qq update && apt-get install git -y -qq
 RUN git config --global --add safe.directory /app
 RUN pip3 install -r .github/workflows/check_pep8/requirements.txt
 

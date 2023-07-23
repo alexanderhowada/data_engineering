@@ -11,7 +11,6 @@ from utils.spark_utils import pandas_to_spark_string
 class PandasToSparkString(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-
         builder = SparkSession.builder \
             .appName('test_delta_utils') \
             .config('spark.sql.warehouse.dir', 'pyspark_tables') \

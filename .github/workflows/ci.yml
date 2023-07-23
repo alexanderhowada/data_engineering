@@ -1,0 +1,27 @@
+name: Check PEP 8
+
+on:
+  pull_request_target:
+    branches:
+      - "main"
+
+jobs:
+  check_pep8:
+    name: ci
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: environment
+        run: env
+
+      - name: install docker
+        run: bash .github/workflows/install_docker.sh
+
+      - name: run tests
+        env:
+          GITHUB_HEAD_REF: ${{ vars.GITHUB_HEAD_REF }}
+        run: GITHUB_HEAD_REF=${GITHUB_HEAD_REF} bash .github/workflows/run.sh

@@ -1,6 +1,6 @@
 import unittest
 
-from string_utils import normalize_string, camel_to_snake
+from utils.string_utils import normalize_string, camel_to_snake
 
 class TestNormalizeString(unittest.TestCase):
 

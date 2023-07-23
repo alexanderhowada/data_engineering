@@ -6,7 +6,7 @@ from pyspark.sql import SparkSession
 from pyspark.sql import functions as F
 from delta.pip_utils import configure_spark_with_delta_pip
 
-from spark_utils import pandas_to_spark_string
+from utils.spark_utils import pandas_to_spark_string
 
 class PandasToSparkString(unittest.TestCase):
     @classmethod

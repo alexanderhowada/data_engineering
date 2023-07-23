@@ -1,0 +1,5 @@
+pyspark
+unidecode
+pandas
+requests
+delta-spark

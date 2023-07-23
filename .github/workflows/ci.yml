@@ -7,7 +7,7 @@ on:
 
 jobs:
   check_pep8:
-    name: job check PEP 8
+    name: ci
     runs-on: ubuntu-latest
     steps:
       - name: checkout
@@ -18,7 +18,10 @@ jobs:
       - name: environment
         run: env
 
-      - name: run test
+      - name: install docker
+        run: bash .github/workflows/install_docker.sh
+
+      - name: run tests
         env:
           GITHUB_HEAD_REF: ${{ vars.GITHUB_HEAD_REF }}
         run: GITHUB_HEAD_REF=${GITHUB_HEAD_REF} bash .github/workflows/run.sh

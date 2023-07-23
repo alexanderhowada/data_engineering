@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 # Get the added (A) or modified (M) files.
 diff_files="$(
     git diff --name-status origin/main origin/${GITHUB_HEAD_REF} |
@@ -20,7 +22,7 @@ do
     echo "-----------------------------------" >> $LOG_FILE
     echo "Checking style of ${f}" >> $LOG_FILE
     err=$(pycodestyle --max-line-length 120 --exclude=! --ignore=W,E226,E302,E402,E305 ${f})
-    if [ ${#diff_files} -gt 0 ]; then
+    if [ "$?" -ne 0 ]; then
         has_errors=true
         echo "$err" >> $LOG_FILE
     fi
@@ -29,8 +31,9 @@ done
 
 # Exits with status 1 in case of errors.
 # Write an empty file if there is no errors.
-if [ $has_errors=true ]; then
+if [ "{$has_errors}" = true ]; then
+    echo "here"
     exit 1
 fi
 
-echo "" > $LOG_FILE
+:> $LOG_FILE

@@ -1,7 +1,5 @@
 FROM python:3-slim
 
-ARG LOCAL
-
 WORKDIR /app
 COPY . /app
 

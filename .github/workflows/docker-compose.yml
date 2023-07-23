@@ -1,13 +1,23 @@
 version: '3.8'
 
 services:
-    check_pep8:
+#    check_pep8:
+#        build:
+#            context: "${BASE_PATH}"
+#            dockerfile: .github/workflows/check_pep8/Dockerfile
+#        container_name: check_pep8
+#        volumes:
+#            - "${BASE_PATH}:/app"
+#        environment:
+#            - "GITHUB_HEAD_REF=${GITHUB_HEAD_REF}"
+#            - "LOG_FILE=${LOG_FOLDER}/check_pep8.log"
+    unittest:
         build:
             context: "${BASE_PATH}"
-            dockerfile: .github/workflows/check_pep8/Dockerfile
-        container_name: check_pep8
+            dockerfile: .github/workflows/unittest/Dockerfile
+        container_name: unittest
         volumes:
             - "${BASE_PATH}:/app"
         environment:
             - "GITHUB_HEAD_REF=${GITHUB_HEAD_REF}"
-            - "LOG_FILE=${LOG_FOLDER}/check_pep8.log"
+            - "LOG_FILE=${LOG_FOLDER}/unittest.log"

@@ -17,7 +17,6 @@ class BaseTest(unittest.TestCase):
         self.init_spark()
         self.load_dfs()
 
-
     def init_spark(self):
         builder = SparkSession.builder \
             .appName('test_delta_utils') \
@@ -85,7 +84,11 @@ class BaseTest(unittest.TestCase):
         self.df_dt = self.df_dt.withColumn('date', F.to_date(self.df_dt['dt'], 'yyyy-MM-dd'))
 
         self.df_ts = self.spark.createDataFrame(
-            [(1, '2022-03-01 12:23:49'),(2, '2022-03-02 13:01:32'),(3, '2022-03-03 14:00:00'),(4, '2022-03-04 15:00:00'),(5, '2022-03-05 16:00:00')],
+            [
+                (1, '2022-03-01 12:23:49'), (2, '2022-03-02 13:01:32'),
+                (3, '2022-03-03 14:00:00'), (4, '2022-03-04 15:00:00'),
+                (5, '2022-03-05 16:00:00')
+            ],
             schema=['id', 'ts']
         )
         self.df_ts = self.df_ts.withColumn('ts', F.to_timestamp(self.df_ts['ts'], 'yyyy-MM-dd HH:mm:ss'))
@@ -204,22 +207,19 @@ class TestGenerateWhereClause(BaseTest):
             generate_where_clause(self.df_empty1, ['fdsa'])
 
     def test_df1_id(self):
-
         c = generate_where_clause(self.df1, ['id'])
         self.assertEqual(c, ["id in (1, 2, 3, 4, 5)"])
 
     def test_df1_id_1(self):
-
         df = self.df1.filter('id = 1')
         c = generate_where_clause(df, ['id'])
         self.assertEqual(c, ["id = 1"])
-    def test_df1_name(self):
 
+    def test_df1_name(self):
         c = generate_where_clause(self.df1, ['name'])
         self.assertEqual(c, ["name in ('bob', 'alice', 'charlie', 'richard', 'qwer')"])
 
     def test_df1_name_1(self):
-
         df = self.df1.filter('id = 1')
         c = generate_where_clause(df, ['name'])
         self.assertEqual(c, ["name = 'bob'"])
@@ -236,20 +236,20 @@ class TestGenerateWhereClause(BaseTest):
         self.assertEqual(c, ['id = 2', "dt = '2022-01-02'"])
 
     def test_df_ts(self):
-
         df = self.df_ts.filter('id in (1,2,3)')
         c = generate_where_clause(df, ['id', 'ts'])
-        self.assertEqual(c, ['id in (1, 2, 3)', "ts in ('2022-03-01 12:23:49', '2022-03-02 13:01:32', '2022-03-03 14:00:00')"])
+        self.assertEqual(
+            c,
+            ['id in (1, 2, 3)', "ts in ('2022-03-01 12:23:49', '2022-03-02 13:01:32', '2022-03-03 14:00:00')"]
+        )
 
     def test_df_ts_1(self):
-
         df = self.df_ts.filter('id in (3)')
         c = generate_where_clause(df, ['id', 'ts'])
         self.assertEqual(c, ['id = 3', "ts = '2022-03-03 14:00:00'"])
 
 
 if __name__ == '__main__':
-
     unittest.main()
 
     # bt = BaseTest()

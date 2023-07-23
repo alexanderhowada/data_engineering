@@ -6,8 +6,6 @@
 # The log file must be empty if there is no error.
 # Note that the environment variables from Github actions.
 
-set -e
-
 export BASE_PATH=$(pwd)
 export LOG_FOLDER=".github/workflows/docker_logs"
 
@@ -37,6 +35,6 @@ sudo chown -R $(whoami):$(whoami) ${LOG_FOLDER}
 rm -rf ${LOG_FOLDER}/*.log
 rmdir ${LOG_FOLDER}
 
-if [ $has_error=true ]; then
+if [ $has_error = true ]; then
     exit 1
 fi

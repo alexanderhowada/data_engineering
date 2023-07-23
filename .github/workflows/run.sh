@@ -6,8 +6,6 @@
 # The log file must be empty if there is no error.
 # Note that the environment variables from Github actions.
 
-set -e
-
 export BASE_PATH=$(pwd)
 export LOG_FOLDER=".github/workflows/docker_logs"
 

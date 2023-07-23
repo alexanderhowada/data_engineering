@@ -11,7 +11,7 @@ set -e
 export BASE_PATH=$(pwd)
 export LOG_FOLDER=".github/workflows/docker_logs"
 
-mkdir $LOG_FOLDER
+mkdir -p $LOG_FOLDER
 
 docker compose -f "${BASE_PATH}/.github/workflows/docker-compose.yml" up --build
 

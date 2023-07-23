@@ -37,6 +37,6 @@ sudo chown -R $(whoami):$(whoami) ${LOG_FOLDER}
 rm -rf ${LOG_FOLDER}/*.log
 rmdir ${LOG_FOLDER}
 
-if [ $has_error=true ]; then
+if [ $has_error = true ]; then
     exit 1
 fi

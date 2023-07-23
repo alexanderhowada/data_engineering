@@ -1,7 +1,5 @@
 #!/bin/bash
 
-err_file=pycodestyle_failures
-
 # Get the added (A) or modified (M) files.
 diff_files="$(
     git diff --name-status origin/main origin/${GITHUB_HEAD_REF} |
@@ -19,22 +17,22 @@ fi
 has_errors=false
 for f in "${diff_files[@]}"
 do
-    echo "-----------------------------------" >> $err_file
-    echo "Checking style of ${f}" >> $err_file
+    echo "-----------------------------------" >> $LOG_FILE
+    echo "Checking style of ${f}" >> $LOG_FILE
     err=$(pycodestyle --max-line-length 120 --exclude=! --ignore=W,E226,E302,E402,E305 ${f})
     if [ ${#diff_files} -gt 0 ]; then
         has_errors=true
-        echo "$err" >> $err_file
+        echo "$err" >> $LOG_FILE
     fi
-    echo "-----------------------------------" >> $err_file
+    echo "-----------------------------------" >> $LOG_FILE
 done
 
 # Exits with status 1 in case of errors.
+# Write an empty file if there is no errors.
 if [ $has_errors=true ]; then
-    cat $err_file
-    rm -rf $err_file
+    chmod 777 $LOG_FILE
     exit 1
 fi
 
-rm -rf $err_file
-echo "OK!"
+echo "" > $LOG_FILE
+chmod 777 $LOG_FILE

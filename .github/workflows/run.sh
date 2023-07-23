@@ -18,7 +18,7 @@ docker compose -f "${BASE_PATH}/.github/workflows/docker-compose.yml" up --build
 # Read all logs
 has_error=false
 logs="$(find .github/workflows/ -name "*.log")"
-for l in "${logs[@]}"; do
+for l in ${logs[@]}; do
     s=$(cat ${l})
     if [ "${#s}" -gt 0 ]; then
         has_error=true
@@ -33,13 +33,9 @@ for l in "${logs[@]}"; do
 done
 
 # Erase LOG_FOLDER and logs
-echo "here"
 sudo chown -R $(whoami):$(whoami) ${LOG_FOLDER}
-echo "here2"
 rm -rf ${LOG_FOLDER}/*.log
-echo "here3"
 rmdir ${LOG_FOLDER}
-echo "here4"
 
 if [ $has_error=true ]; then
     exit 1

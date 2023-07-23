@@ -15,8 +15,10 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: environment
-        run: env
+      - name: checkout to branch
+        env:
+          GITHUB_HEAD_REF: ${{ vars.GITHUB_HEAD_REF }}
+        run: git checkout origin/${GITHUB_HEAD_REF}
 
       - name: install docker
         run: bash .github/workflows/install_docker.sh

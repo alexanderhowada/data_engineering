@@ -6,7 +6,7 @@ from pyspark.sql.utils import AnalysisException
 from delta.pip_utils import configure_spark_with_delta_pip
 import pyspark.sql.functions as F
 
-from delta_utils import table_exists, generate_where_clause, merge
+from utils.delta_utils import table_exists, generate_where_clause, merge
 
 
 class BaseTest(unittest.TestCase):

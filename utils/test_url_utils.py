@@ -1,5 +1,5 @@
 import unittest
-from url_utils import get_json_from_url
+from utils.url_utils import get_json_from_url
 
 class TestUrl(unittest.TestCase):
     def test_valid_url(self):

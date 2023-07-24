@@ -9,3 +9,5 @@ python3 -m unittest discover -s . -v &> $LOG_FILE
 if [ "$?" -eq 0 ]; then
     :> $LOG_FILE
 fi
+
+exit 1

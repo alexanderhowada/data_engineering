@@ -6,6 +6,8 @@ git checkout $GITHUB_HEAD_REF
 
 python3 -m unittest discover -s . -v &> $LOG_FILE
 
+cat $LOG_FILE
+
 err=$(cat $LOG_FILE | grep -E "^FAILED \(errors=[0-9]+\)")
 if [ ${#err} -gt 0 ]; then
     exit 1

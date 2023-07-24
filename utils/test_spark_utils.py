@@ -50,6 +50,8 @@ class PandasToSparkString(unittest.TestCase):
         df = pandas_to_spark_string(self.pdf1, spark_session=self.spark)
         a
         null_count = df.select(F.sum(F.when(df['age'].isNull(), 1).otherwise(0).alias('age'))).collect()[0][0]
+        aa
+        self.assertEqual(null_count, 3)
 
         self.assertEqual(null_count, 3)
 

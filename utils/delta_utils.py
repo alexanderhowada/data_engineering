@@ -39,6 +39,7 @@ def generate_where_clause(df, column_list: List[str]):
     for c in column_list:
 
         unique_values = df.select(c).distinct().rdd.flatMap(lambda x: x).collect()
+        unique_values.sort()
         dt = str(df.schema[c].dataType).lower()
 
         if 'date' in dt or 'timestamp' in dt:

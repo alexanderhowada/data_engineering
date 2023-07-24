@@ -6,6 +6,7 @@ git checkout origin/$GITHUB_HEAD_REF
 
 python3 -m unittest discover -s . -v &> $LOG_FILE
 
-if [ "$?" -eq 0 ]; then
+err=$(cat $LOG_FILE | grep -E "^FAILED \(errors=[0-9]+\)")
+if [ ${#err} -gt 0 ]; then
     :> $LOG_FILE
 fi

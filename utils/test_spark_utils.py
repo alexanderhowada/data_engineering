@@ -11,7 +11,6 @@ from utils.spark_utils import pandas_to_spark_string
 class PandasToSparkString(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-
         builder = SparkSession.builder \
             .appName('test_delta_utils') \
             .config('spark.sql.warehouse.dir', 'pyspark_tables') \
@@ -40,8 +39,6 @@ class PandasToSparkString(unittest.TestCase):
         )
 
     def test_simple_transformation(self):
-
-        
         df = pandas_to_spark_string(self.pdf1, spark_session=self.spark)
 
         for _, t in df.dtypes:
@@ -49,11 +46,9 @@ class PandasToSparkString(unittest.TestCase):
 
     def test_simple_transformation(self):
         df = pandas_to_spark_string(self.pdf1, spark_session=self.spark)
-
         null_count = df.select(F.sum(F.when(df['age'].isNull(), 1).otherwise(0).alias('age'))).collect()[0][0]
-        aa
         self.assertEqual(null_count, 3)
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     unittest.main()

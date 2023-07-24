@@ -39,6 +39,7 @@ def generate_where_clause(df, column_list: List[str]):
     for c in column_list:
 
         unique_values = df.select(c).distinct().rdd.flatMap(lambda x: x).collect()
+        unique_values.sort()
         dt = str(df.schema[c].dataType).lower()
 
         if 'date' in dt or 'timestamp' in dt:
@@ -79,14 +80,14 @@ def merge(df, target_table, pk, spark_session=None, partition=[]):
         dt = DeltaTable.forName(spark, target_table)
 
         condition = [f't.{k}=s.{k}' for k in pk]
-        condition += ['t.'+ wc for wc in generate_where_clause(df, partition)]
+        condition += ['t.' + wc for wc in generate_where_clause(df, partition)]
         condition = ' and '.join(condition)
 
         dt.alias('t').merge(
             df.alias('s'), condition
         ).whenMatchedUpdateAll() \
-        .whenNotMatchedInsertAll() \
-        .execute()
+            .whenNotMatchedInsertAll() \
+            .execute()
     else:
         if len(partition) > 0:
             df.write.partitionBy(*partition).mode('overwrite').format('delta').saveAsTable(target_table)

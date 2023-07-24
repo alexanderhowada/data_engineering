@@ -207,7 +207,8 @@ class TestGenerateWhereClause(BaseTest):
             generate_where_clause(self.df_empty1, ['fdsa'])
 
     def test_df1_id(self):
-        c = generate_where_clause(self.df1, ['id'])
+        df1 = self.df1.sort("id")
+        c = generate_where_clause(df1, ['id'])
         self.assertEqual(c, ["id in (1, 2, 3, 4, 5)"])
 
     def test_df1_id_1(self):
@@ -216,8 +217,9 @@ class TestGenerateWhereClause(BaseTest):
         self.assertEqual(c, ["id = 1"])
 
     def test_df1_name(self):
-        c = generate_where_clause(self.df1, ['name'])
-        self.assertEqual(c, ["name in ('bob', 'alice', 'charlie', 'richard', 'qwer')"])
+        df1 = self.df1.sort("name")
+        c = generate_where_clause(df1, ['name'])
+        self.assertEqual(c, ["name in ('alice', 'bob', 'charlie', 'qwer', 'richard')"])
 
     def test_df1_name_1(self):
         df = self.df1.filter('id = 1')
@@ -225,8 +227,8 @@ class TestGenerateWhereClause(BaseTest):
         self.assertEqual(c, ["name = 'bob'"])
 
     def test_df_dt(self):
-
-        c = generate_where_clause(self.df_dt, ['id', 'dt'])
+        df_dt = self.df_dt.sort("id")
+        c = generate_where_clause(df_dt, ['id', 'dt'])
         self.assertEqual(c, ['id in (1, 2, 3)', "dt in ('2022-01-01', '2022-01-02', '2022-01-03')"])
 
     def test_df_dt_1(self):

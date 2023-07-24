@@ -21,6 +21,9 @@ jobs:
         with:
           python-version: '3.10'
 
+      - name: ls
+        run: ls *
+
       - name: install docker
         run: bash .github/workflows/install_docker.sh
 

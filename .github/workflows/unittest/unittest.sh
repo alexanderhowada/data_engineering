@@ -13,4 +13,4 @@ if [ ${#err} -gt 0 ]; then
     exit 1
 fi
 
-# :> $LOG_FILE
+:> $LOG_FILE

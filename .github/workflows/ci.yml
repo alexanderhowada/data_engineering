@@ -19,6 +19,9 @@ jobs:
       - name: environment
         run: env
 
+      - name: cat
+        run: cat utils/test_spark_utils.py
+
       - name: install docker
         run: bash .github/workflows/install_docker.sh
 

@@ -28,8 +28,8 @@ class TestRunSH(unittest.TestCase):
     @classmethod
     def setUp(cls):
         with open(TEST_FILE, "w") as f:
-            for l in cls.testfile:
-                f.write(str(l))
+            for ll in cls.testfile:
+                f.write(str(ll))
                 f.write("\n")
 
     def test_replace_asdf(self):

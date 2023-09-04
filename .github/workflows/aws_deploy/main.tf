@@ -49,3 +49,13 @@ resource "aws_lambda_function" "first_lambda" {
     layers=[aws_lambda_layer_version.data_engineering.arn]
     depends_on=[aws_lambda_layer_version.data_engineering]
 }
+
+resource "aws_lambda_function" "url_request_text" {
+    filename="mock.zip"
+    function_name="url_request_text"
+    handler="aws.aws_lambda.url_request_text.main.main"
+    runtime="python3.11"
+    role=var.AWS_LAMBDA_ROLE
+    layers=[aws_lambda_layer_version.data_engineering.arn]
+    depends_on=[aws_lambda_layer_version.data_engineering]
+}

@@ -2,6 +2,27 @@ variable AWS_LAMBDA_ROLE {}
 
 provider "aws" {}
 
+# resource "aws_iam_role" "test_role" {
+#     name="test_role"
+#     assume_role_policy=jsonencode({
+#         Version = "2017-10-17",
+#         Statement = [
+#             {
+#                 Action = "sts:AssumeRole",
+#                 Effect = "Allow",
+#                 Principal = {
+#                     Service = "lambda.amazonaws.com"
+#                 }
+#             }
+#         ]
+#     })
+# }
+#
+# resource "aws_iam_policy_attachment" "attach_s3full_test_role" {
+#     policy_arn="arn:aws:iam::aws:policy/AmazonS3FullAccess"
+#     name="iam_role.test_role.name"
+# }
+
 resource "aws_lambda_layer_version" "data_engineering" {
     filename="lambda_layer.zip"
     compatible_runtimes=["python3.11"]

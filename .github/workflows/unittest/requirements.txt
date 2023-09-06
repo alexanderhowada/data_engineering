@@ -3,3 +3,5 @@ unidecode
 pandas
 requests
 delta-spark
+boto3
+numpy==1.24

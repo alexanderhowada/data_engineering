@@ -1,6 +1,6 @@
 import json
 import unittest
-from main import main
+from aws.aws_lambda.multiply.main import main
 
 
 class TestMain(unittest.TestCase):
@@ -11,7 +11,7 @@ class TestMain(unittest.TestCase):
         }
         r = json.loads(main(event, None)['body'])
 
-        self.assertEquals(
+        self.assertEqual(
             r,
             {'s': 10, 'm': 24}
         )
@@ -22,7 +22,7 @@ class TestMain(unittest.TestCase):
         }
         r = json.loads(main(event, None)['body'])
 
-        self.assertEquals(
+        self.assertEqual(
             r,
             {'s': None, 'm': None}
         )

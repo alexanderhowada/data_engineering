@@ -3,7 +3,7 @@ import unittest
 
 import boto3
 
-from main import main
+from aws.aws_lambda.url_request_text.main import main
 
 
 def delete_from_bucket(bucket_name, path_file):

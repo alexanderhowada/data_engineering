@@ -15,7 +15,6 @@ def get_spark_session(mode='prod'):
     builder = get_spark_builder()
 
     if mode == 'prod':
-        builder = builder.config("hive.metastore.warehouse.dir", "s3://ahow-delta-lake/delta-lake")
         spark = builder.getOrCreate()
     else:
         builder = builder.config("spark.sql.warehouse.dir", mode)
@@ -24,18 +23,15 @@ def get_spark_session(mode='prod'):
 
 
 def main(spark):
-
-    spark.sql("CREATE DATABASE IF NOT EXISTS first_database")
-
     df = spark.createDataFrame(
         [
-            [1, 3.14, ""],
-            [2, 2.00, "two!"],
-            [3, 2.71, "e?"]
+            [4, 3.14, ""],
+            [5, 2.00, "two!"],
+            [6, 2.71, "e?"]
         ],
         schema=['id', 'value', 'description']
     )
-    df.write.format('delta').mode('overwrite').saveAsTable('first_database.first_table')
+    df.write.format('delta').mode('append').save('s3://ahow-delta-lake/first_database/first_table')
 
 
 if __name__ == '__main__':

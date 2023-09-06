@@ -22,7 +22,10 @@ jobs:
           python-version: '3.11'
 
       - name: ls
-        run: ls *
+        run: ls .github/workflows/aws_deploy/*
+
+      - name: cat
+        run: cat .github/workflows/unittest/requirements.txt
 
       - name: install docker
         run: bash .github/workflows/install_docker.sh

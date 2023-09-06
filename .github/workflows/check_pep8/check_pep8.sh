@@ -4,7 +4,7 @@
 diff_files="$(
     git diff --name-status origin/main origin/${GITHUB_HEAD_REF} |
     grep -E "^[AM]\s+" |
-    grep -E --only-matching "[a-zA-Z0-9_/ \t]+\.py$"
+    grep -E --only-matching ".?[a-zA-Z0-9_/ \t]+\.py$"
 )"
 
 # Returns if there is no modifications.

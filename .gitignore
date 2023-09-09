@@ -9,3 +9,5 @@ data
 *.mp4
 .*
 *.txt
+*.jar
+*.zip

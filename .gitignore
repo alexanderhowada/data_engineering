@@ -11,3 +11,6 @@ data
 *.txt
 *.jar
 *.zip
+*.json
+*.gz
+.env

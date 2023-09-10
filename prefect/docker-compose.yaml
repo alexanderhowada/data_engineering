@@ -1,0 +1,10 @@
+version: '3.8'
+
+services:
+    prefect_agent:
+        build:
+            dockerfile: "Dockerfile"
+            args:
+                - "PREFECT_KEY=${PREFECT_KEY}"
+                - "PREFECT_WORKSPACE=${PREFECT_WORKSPACE}"
+        container_name: "prefect_agent"

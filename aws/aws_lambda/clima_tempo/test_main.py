@@ -1,8 +1,11 @@
+import os
 import unittest
 
 from aws.aws_lambda.clima_tempo.main import main
 
-TOKEN = 'fa37b0a07b45cccb0a9057facd4d022e'
+
+
+TOKEN = os.environ['CLIMATEMPO_TOKEN']
 event = {
     'token': TOKEN,
     'city_ids': [3477],

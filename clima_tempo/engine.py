@@ -92,7 +92,7 @@ if __name__ == '__main__':
     from dotenv import load_dotenv
 
     load_dotenv()
-    TOKEN = os.environ['TOKEN']
+    TOKEN = os.environ['CLIMATEMPO_TOKEN']
 
     api = ClimaTempoAPI(TOKEN)
 

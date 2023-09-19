@@ -59,3 +59,14 @@ resource "aws_lambda_function" "url_request_text" {
     layers=[aws_lambda_layer_version.data_engineering.arn]
     depends_on=[aws_lambda_layer_version.data_engineering]
 }
+
+resource "aws_lambda_function" "clima_tempo_forecast_72" {
+    filename="mock.zip"
+    function_name="clima_tempo_forecast_72"
+    handler="aws.aws_lambda.clima_tempo.main.main"
+    runtime="python3.11"
+    timeout=120
+    role=var.AWS_LAMBDA_ROLE
+    layers=[aws_lambda_layer_version.data_engineering.arn]
+    depends_on=[aws_lambda_layer_version.data_engineering]
+}

@@ -1,10 +1,10 @@
 import boto3
 import json
-from clima_tempo.engine import ClimaTempoAPI
 
 from requests import Response
 
 from utils.aws_utils import write_to_bucket
+from clima_tempo.engine import ClimaTempoAPI
 
 def forecast72(event):
     token = event['token']
@@ -18,22 +18,24 @@ def forecast72(event):
         return json_list
     else:
         return api.last_request
+
 def main(event, context):
     """Requests the forecast of the last 75h. and writes it into the bucket.
 
     Args:
         event: dictionary. Ex:
-        {
-            'token': Clima tempo API token,
-            'city_ids': list with clima tempo city ids,
-            'r_kwargs': kwargs for requests.get,
-            'bucket': AWS bucket write the JSON,
-            'path_file': the file in the bucket to write the data,
-        }
+            {
+                'token': Clima tempo API token,
+                'city_ids': list with clima tempo city ids,
+                'r_kwargs': kwargs for requests.get,
+                'bucket': AWS bucket write the JSON,
+                'path_file': the file in the bucket to write the data,
+            }
 
     Returns:
         dict with the 'statusCode' and 'body'.
     """
+
     f = forecast72(event)
     if isinstance(f, Response):
         return {

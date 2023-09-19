@@ -3,8 +3,10 @@ version: '3.8'
 services:
     prefect_agent:
         build:
-            dockerfile: "Dockerfile"
+            dockerfile: "prefect_deploy/Dockerfile"
+            context: "${CURRENT_WORKDIR}"
             args:
                 - "PREFECT_KEY=${PREFECT_KEY}"
                 - "PREFECT_WORKSPACE=${PREFECT_WORKSPACE}"
+                - "CURRENT_WORKDIR=${CURRENT_WORKDIR}"
         container_name: "prefect_agent"

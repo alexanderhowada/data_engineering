@@ -10,7 +10,7 @@ event = {
     'token': TOKEN,
     'city_ids': [3477],
     'bucket': 'ahow-delta-lake',
-    'path_file': 'raw/clima_tempo/forecast_72/test.csv',
+    'path_file': 'raw/clima_tempo/forecast_72/test2.csv',
 }
 
 r = main(event, None)

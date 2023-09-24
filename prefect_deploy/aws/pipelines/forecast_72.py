@@ -35,10 +35,14 @@ def raw_forecast_72(bucket_name, file_path):
 
 @flow(log_prints=True, timeout_seconds=60*15)
 def clima_tempo_forecast_72(bucket_name, file_path):
+    """Runs forecast if schedule is less than 3h late."""
+
     now = datetime.now().replace(tzinfo=timezone("UTC"))
     d = prefect.context.get_run_context().flow_run.dict()
     diff_time = abs(d['start_time'] - now)
-    print(d['start_time'], now)
+
+    print(f"Prefect scheduled time: {d}")
+    print(f"Agent execution time: {now}")
 
     if diff_time > timedelta(seconds=3600*3):
         raise Exception(f"Too late {diff_time}. Will not run.")

@@ -1,18 +1,23 @@
-# General data engineering projects and drafts.
+# Data engineering projects and drafts.
 
 Under construction. This repo implements several scripts for testing concepts.
-Currently, this repository only contains general purpose code,
-however I plan to deploy a few tests in AWS.
+Currently, this repository contains general purpose code
+and a few deployments in AWS (see [AWS Project](#aws-project)).
 The main projects are:
 
-- airflow: ETLs with airflow. Will not be implemented in favor of prefect.
+- airflow: Contains a few tests with Airflow, however I will not develop it favor of prefect.
 - audio: tests with audio processing.
 - aws: projects in aws (more code will be implemented in the near future).
+  - lambda: contains implementations for lambda functions.
+  - aws_emr_serverless: contains scripts and examples to run scripts in AWS EMR serverless.
+  - tests: contains a few scripts used for manual testing.
+  - CD: the <code>.github/workflows/aws_deploy</code> implements the deployment to AWS.
 - clima_tempo: implementation of the clima tempo (weather) api.
 - databricks: utilities for Databricks. Does not implements tests since it requires a databricks deploy.
 - drafts: random drafts and code examples.
 - postgres: utilities for postgres.
-- prefect: examples using prefect.
+- prefect_deploy: examples and deployments using prefect.
+  - aws: implements pipelines for AWS.
 - random_person: implementation ETLs using the random person api.
 - scraping: contains several scraping projects.
 - supermetrics: implementation of ETLs using the supermetrics API.
@@ -22,3 +27,25 @@ The main projects are:
 
 The <code>.github/workflows</code> implements my concept of CI using GitHub actions.
 See <code>.github/workflows/README.md</code> for more details.
+
+# AWS Project
+
+## Overview
+
+1. Run every command (except terraform) from the root directory.
+
+## Environment variables
+
+## Infrastructure
+
+### 1. Bucket
+
+### 2. Lambda
+
+### 3. EMR Server less
+
+### 4. Postgres
+
+## Prefect cloud deployment
+
+<code>docker compose -f prefect_deploy/docker-compose.yaml up --build</code>

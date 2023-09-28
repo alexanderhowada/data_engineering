@@ -39,6 +39,15 @@ class AwsBaseBlock(Block):
         )
         return cli
 
+    def lambda_get_cli(self):
+        cli = boto3.client(
+            'lambda',
+            aws_access_key_id=self.get_secret('aws', 'AWS_ACCESS_KEY_ID'),
+            aws_secret_access_key=self.get_secret('aws', 'AWS_SECRET_ACCESS_KEY'),
+            region_name=self.get_secret('aws', 'AWS_DEFAULT_REGION'),
+        )
+        return cli
+
     def emr_serverless_get_cli(self):
         cli = boto3.client(
             'emr-serverless',
@@ -68,7 +77,7 @@ class AwsBaseBlock(Block):
         if isinstance(payload, dict):
             payload = json.dumps(payload)
 
-        cli = self.s3_get_cli()
+        cli = self.lambda_get_cli()
         r = cli.invoke(
             FunctionName=name,
             Payload=payload

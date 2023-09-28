@@ -16,6 +16,7 @@ def get_aws_block():
 @flow(timeout_seconds=60*5, retries=1, log_prints=True)
 def raw_forecast_72(bucket_name, file_path):
     file_path += str(datetime.now()) + '.json'
+    file_path = file_path.replace(' ', '_').replace(':', '-')
     block = get_aws_block()
     event = {
         'token': block.get_secret('clima_tempo', 'TOKEN'),
@@ -31,6 +32,21 @@ def raw_forecast_72(bucket_name, file_path):
         raise Exception(f"Status code {r['StatusCode']}")
 
     return bucket_name, file_path
+
+@flow(timeout_seconds=60*15, retries=0, log_prints=True)
+def raw_etl():
+    block = get_aws_block()
+    job_driver = {
+        'sparkSubmit': {
+            'entryPoint': 'data_engineering/aws/aws_emr_serverless/forecast_72/raw.py'
+        }
+    }
+    r = block.invoke_emr(
+        'forecast_72_raw_etl', job_driver, execution_timeout=15
+    )
+    if r["StatusCode"] >= 400:
+        raise Exception(f"Status code {r['StatusCode']}")
+    return r
 
 
 @flow(log_prints=True, timeout_seconds=60*15)
@@ -48,6 +64,7 @@ def clima_tempo_forecast_72(bucket_name, file_path):
         raise Exception(f"Too late {diff_time}. Will not run.")
 
     raw_forecast_72(bucket_name, file_path)
+    raw_etl()
 
 
 def deploy():
@@ -69,4 +86,5 @@ def deploy():
     dep.apply()
 
 if __name__ == '__main__':
-    deploy()
+    # deploy()
+    print(raw_etl())

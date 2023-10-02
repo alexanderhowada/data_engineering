@@ -47,7 +47,6 @@ def raw_etl(raw_path, target_tb_path, checkpoint_location):
     )
 
     if r["jobRun"]["state"] != "SUCCEEDED":
-        print(r["jobRun"]["ErrorMessage"])
         raise Exception(f"Status code {r['StatusCode']}")
     return r
 

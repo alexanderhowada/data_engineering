@@ -1,9 +1,9 @@
 import sys
-import pandas as pd
 from pyspark.sql import SparkSession
 from pyspark.sql import functions as F
 from pyspark.sql.types import StructType, StructField, StringType, DoubleType, ArrayType, LongType, TimestampType
 from delta.pip_utils import configure_spark_with_delta_pip
+
 
 def get_spark_builder():
     builder = SparkSession.builder \
@@ -82,6 +82,7 @@ def main(raw_path, checkpoin_location, schema):
     df_stream = spark.readStream \
         .option('maxFilesPertrigger', '1') \
         .option('trigger', 'availablenow') \
+        .option('fileNameOnly', 'true') \
         .json(
             path=raw_path,
             multiLine=True, schema=schema,
@@ -122,15 +123,24 @@ SCHEMA = StructType([
 if __name__ == '__main__':
 
     is_test = 'prod'
-    PREFIX = "s3://ahow-delta-lake"
-    if len(sys.argv) > 1:
+
+    # Path examples
+
+    # Se to True to run test locally.
+    if True:
         print("Running test")
         is_test = 'test'
-        PREFIX = '/home/ahow/MyGitHub/data_engineering/aws/local_bucket'
+        PREFIX = '/home/ahow/MyGitHub/local_bucket'
+    else:
+        PREFIX = "s3://ahow-delta-lake"
 
-    RAW_PATH = f'{PREFIX}/raw/clima_tempo/forecast_72/'
-    TARGET_TB_PATH = f'{PREFIX}/delta-lake/clima_tempo/forecast_72/'
-    CHECKPOINT_LOCATION = f'{PREFIX}/raw/clima_tempo/forecast_72/checkpoint'
+    # RAW_PATH = f'{PREFIX}/raw/clima_tempo/forecast_72/'
+    # TARGET_TB_PATH = f'{PREFIX}/delta-lake/clima_tempo/forecast_72/'
+    # CHECKPOINT_LOCATION = f'{PREFIX}/raw/clima_tempo/forecast_72/checkpoint'
+
+    RAW_PATH = sys.argv[1]
+    TARGET_TB_PATH = sys.argv[2]
+    CHECKPOINT_LOCATION = sys.argv[3]
 
     # full_delete(CHECKPOINT_LOCATION, TARGET_TB_PATH)
 

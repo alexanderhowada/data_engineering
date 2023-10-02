@@ -34,24 +34,41 @@ def raw_forecast_72(bucket_name, file_path):
     return bucket_name, file_path
 
 @flow(timeout_seconds=60*15, retries=0, log_prints=True)
-def raw_etl():
+def raw_etl(raw_path, target_tb_path, checkpoint_location):
     block = get_aws_block()
     job_driver = {
         'sparkSubmit': {
-            'entryPoint': 'data_engineering/aws/aws_emr_serverless/forecast_72/raw.py'
+            'entryPoint': 'data_engineering/aws/aws_emr_serverless/forecast_72/raw.py',
+            'entryPointArguments': [raw_path, target_tb_path, checkpoint_location]
         }
     }
     r = block.invoke_emr(
         'forecast_72_raw_etl', job_driver, execution_timeout=15
     )
-    if r["StatusCode"] >= 400:
+
+    if r["jobRun"]["state"] != "SUCCEEDED":
+        print(r["jobRun"]["ErrorMessage"])
         raise Exception(f"Status code {r['StatusCode']}")
     return r
 
-
 @flow(log_prints=True, timeout_seconds=60*15)
-def clima_tempo_forecast_72(bucket_name, file_path):
-    """Runs forecast if schedule is less than 3h late."""
+def clima_tempo_forecast_72(param: dict):
+    """Runs forecast pipeline if schedule is less than 3h late.
+
+    Args:
+        param: ex
+            {
+                'raw_forecast_72': {
+                    'file_path': 'raw/clima_tempo/forecast_72/forecast_72_',
+                    'bucket_name': 'ahow-delta-lake',
+                },
+                'raw_etl': {
+                    'raw_path': f'{prefix}/raw/clima_tempo/forecast_72/',
+                    'target_tb_path': f'{prefix}/delta-lake/clima_tempo/forecast_72/',
+                    'checkpoint_location': f'{prefix}/raw/clima_tempo/forecast_72/checkpoint',
+                }
+            }
+    """
 
     now = datetime.now().replace(tzinfo=timezone("UTC"))
     d = prefect.context.get_run_context().flow_run.dict()
@@ -63,15 +80,26 @@ def clima_tempo_forecast_72(bucket_name, file_path):
     if diff_time > timedelta(seconds=3600*3):
         raise Exception(f"Too late {diff_time}. Will not run.")
 
-    raw_forecast_72(bucket_name, file_path)
-    raw_etl()
+    raw_forecast_72(**param['raw_forecast_72'])
+    raw_etl(**param['raw_etl'])
 
 
 def deploy():
+    prefix = "s3://ahow-delta-lake"
     parameters = {
-        'file_path': 'raw/clima_tempo/forecast_72/forecast_72_',
-        'bucket_name': 'ahow-delta-lake'
+        "param": {
+            "raw_forecast_72": {
+                "file_path": "raw/clima_tempo/forecast_72/forecast_72_",
+                "bucket_name": "ahow-delta-lake",
+            },
+            "raw_etl": {
+                "raw_path": f"{prefix}/raw/clima_tempo/forecast_72/",
+                "target_tb_path": f"{prefix}/delta-lake/clima_tempo/forecast_72/",
+                "checkpoint_location": f"{prefix}/raw/clima_tempo/forecast_72/checkpoint",
+            }
+        }
     }
+
     dep = Deployment.build_from_flow(
         flow=clima_tempo_forecast_72,
         name=f"clima_tempo_forecast_72",
@@ -85,6 +113,6 @@ def deploy():
     )
     dep.apply()
 
-if __name__ == '__main__':
-    # deploy()
-    print(raw_etl())
+if __name__ == "__main__":
+    deploy()
+

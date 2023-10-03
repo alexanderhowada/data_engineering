@@ -8,7 +8,12 @@ def get_spark_builder():
         .appName('first_script.main') \
         .config("spark.sql.extensions", "io.delta.sql.DeltaSparkSessionExtension") \
         .config("spark.sql.catalog.spark_catalog", "org.apache.spark.sql.delta.catalog.DeltaCatalog") \
-        .config('spark.databricks.delta.schema.autoMerge.enabled', True)
+        .config('spark.databricks.delta.schema.autoMerge.enabled', True) \
+        .config(
+            'spark.hadoop.hive.metastore.client.factory.class',
+            'com.amazonaws.glue.catalog.metastore.AWSGlueDataCatalogHiveClientFactory'
+        )
+
     return builder
 
 def get_spark_session(mode='prod'):

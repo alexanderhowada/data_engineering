@@ -4,4 +4,4 @@ unidecode
 pandas
 requests
 delta-spark
-numpy==1.24
+numpy

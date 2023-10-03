@@ -10,6 +10,7 @@ export BASE_PATH=$(pwd)
 export LOG_FOLDER=".github/workflows/docker_logs"
 export AWS_ACCESS_KEY_ID
 export AWS_SECRET_ACCESS_KEY
+export CLIMATEMPO_TOKEN
 
 mkdir -p $LOG_FOLDER
 

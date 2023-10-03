@@ -46,8 +46,8 @@ def raw_etl(raw_path, target_tb_path, checkpoint_location):
         'forecast_72_raw_etl', job_driver, execution_timeout=15
     )
 
-    if r["jobRun"]["state"] != "SUCCEEDED":
-        raise Exception(f"Status code {r['StatusCode']}")
+    if r["jobRun"]["state"] != "SUCCESS":
+        raise Exception(f"Job status {r['jobRun']['state']}")
     return r
 
 @flow(log_prints=True, timeout_seconds=60*15)
@@ -83,7 +83,7 @@ def clima_tempo_forecast_72(param: dict):
     raw_etl(**param['raw_etl'])
 
 
-def deploy():
+def deploy(test=False):
     prefix = "s3://ahow-delta-lake"
     parameters = {
         "param": {
@@ -110,8 +110,17 @@ def deploy():
         ),
         parameters=parameters
     )
-    dep.apply()
+
+    if test:
+        clima_tempo_forecast_72(**parameters)
+    else:
+        dep.apply()
 
 if __name__ == "__main__":
-    deploy()
+    import sys
+
+    if len(sys.argv) > 1 and sys.argv[1] == 'test':
+        deploy(test=True)
+    else:
+        deploy(test=False)
 

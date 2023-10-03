@@ -140,7 +140,8 @@ class AwsBaseBlock(Block):
             ],
             [
                 "spark.jars",
-                r"s3://"+bucket+r"/spark-conf/delta-core_2.12-2.4.0.jar,s3://"+bucket+r"/spark-conf/delta-storage-2.4.0.jar"
+                (r"s3://"+bucket+r"/spark-conf/delta-core_2.12-2.4.0.jar"
+                 ",s3://"+bucket+r"/spark-conf/delta-storage-2.4.0.jar")
             ],
             ["spark.executor.cores", 1],
             ["spark.executor.memory", "2g"],
@@ -159,7 +160,6 @@ class AwsBaseBlock(Block):
         spark_conf = spark_conf.strip()
 
         return spark_conf
-
 
 
 def test_s3_invoke():

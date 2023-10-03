@@ -12,7 +12,10 @@ def get_spark_builder():
         .config("spark.sql.extensions", "io.delta.sql.DeltaSparkSessionExtension") \
         .config("spark.sql.catalog.spark_catalog", "org.apache.spark.sql.delta.catalog.DeltaCatalog") \
         .config('spark.databricks.delta.schema.autoMerge.enabled', True) \
-        .config('spark.hadoop.hive.metastore.client.factory.class', 'com.amazonaws.glue.catalog.metastore.AWSGlueDataCatalogHiveClientFactory') \
+        .config(
+            'spark.hadoop.hive.metastore.client.factory.class',
+            'com.amazonaws.glue.catalog.metastore.AWSGlueDataCatalogHiveClientFactory'
+        )
 
     return builder
 
@@ -97,7 +100,8 @@ def main(raw_path, checkpoin_location, schema):
 
 SCHEMA = StructType([
     StructField('country', StringType(), True),
-    StructField('data',
+    StructField(
+        'data',
         ArrayType(
             StructType([
                 StructField('date', TimestampType(), True),
@@ -106,14 +110,20 @@ SCHEMA = StructType([
                 StructField('pressure', StructType([StructField('pressure', DoubleType(), True)]), True),
                 StructField('rain', StructType([StructField('precipitation', DoubleType(), True)]), True),
                 StructField('temperature', StructType([StructField('temperature', LongType(), True)]), True),
-                StructField('wind', StructType([
-                    StructField('direction', StringType(), True),
-                    StructField('directiondegrees', DoubleType(), True),
-                    StructField('gust', DoubleType(), True),
-                    StructField('velocity', DoubleType(), True)]), True)
-            ])
-            , True
-        ), True
+                StructField(
+                    'wind',
+                    StructType([
+                        StructField('direction', StringType(), True),
+                        StructField('directiondegrees', DoubleType(), True),
+                        StructField('gust', DoubleType(), True),
+                        StructField('velocity', DoubleType(), True)
+                    ]),
+                    True
+                )
+            ]),
+            True
+        ),
+        True
     ),
     StructField('id', LongType(), True),
     StructField('name', StringType(), True),

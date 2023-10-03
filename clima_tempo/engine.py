@@ -22,8 +22,7 @@ class ClimaTempoAPI(BaseAPI):
         self.token = token
 
     def _prepare_params(self, params: dict = {}):
-        """
-        Add token to the requests parameters.
+        """Add token to the requests parameters.
 
         :param params:
         :return: dict.
@@ -35,8 +34,7 @@ class ClimaTempoAPI(BaseAPI):
         return params
 
     def get_request(self, url: str, **r_kwargs):
-        """
-        Get data from URL and add token to the parameters.
+        """Get data from URL and add token to the parameters.
 
         :param url: URL for requests.get.
         :param r_kwargs: kwargs for requests.
@@ -50,10 +48,8 @@ class ClimaTempoAPI(BaseAPI):
 
         return super().get_request(url, **r_kwargs)
 
-
     def forecast_72(self, city_ids: List, **r_kwargs):
-        """
-        Get 72h forecasting for each city in city_ids.
+        """Get 72h forecasting for each city in city_ids.
 
         :param city_ids: list with city ids.
         :param r_kwargs: kwargs for requests.get.
@@ -69,8 +65,7 @@ class ClimaTempoAPI(BaseAPI):
         return json_list
 
     def register_id(self, city_ids: List, **p_kwargs):
-        """
-        Register city_id to token.
+        """Register city_id to token.
 
         :param city_ids: list with city ids.
         :param p_kwargs: kwargs for requests.put.
@@ -120,6 +115,7 @@ if __name__ == '__main__':
         'timeout': 60
     }
 
-    j = api.forecast_72([3477], **r_kwargs) # testing for SP and Sogamoso
+    j = api.forecast_72([3477], **r_kwargs)  # testing for SP and Sogamoso
     print(j)
     print(len(j))
+

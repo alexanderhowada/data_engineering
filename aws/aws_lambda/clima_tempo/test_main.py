@@ -4,7 +4,6 @@ import unittest
 from aws.aws_lambda.clima_tempo.main import main
 
 
-
 TOKEN = os.environ['CLIMATEMPO_TOKEN']
 event = {
     'token': TOKEN,

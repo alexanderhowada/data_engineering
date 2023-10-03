@@ -9,7 +9,10 @@ def get_spark_builder():
         .config("spark.sql.extensions", "io.delta.sql.DeltaSparkSessionExtension") \
         .config("spark.sql.catalog.spark_catalog", "org.apache.spark.sql.delta.catalog.DeltaCatalog") \
         .config('spark.databricks.delta.schema.autoMerge.enabled', True) \
-        .config('spark.hadoop.hive.metastore.client.factory.class', 'com.amazonaws.glue.catalog.metastore.AWSGlueDataCatalogHiveClientFactory') \
+        .config(
+            'spark.hadoop.hive.metastore.client.factory.class',
+            'com.amazonaws.glue.catalog.metastore.AWSGlueDataCatalogHiveClientFactory'
+        )
 
     return builder
 

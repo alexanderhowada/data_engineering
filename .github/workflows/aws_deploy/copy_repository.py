@@ -1,1 +1,0 @@
-aws s3 cp --recursive aws s3://ahow-delta-lake/repositories/data_engineering/aws

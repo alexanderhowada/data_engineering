@@ -1,0 +1,28 @@
+name: CD
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  continuous deployment:
+    name: cd
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          ref: ${{ github.ref }}
+
+      - name: install docker
+        run: bash .github/workflows/install_docker.sh
+
+      - name: deploy
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
+          AWS_LAMBDA_ROLE: ${{ secrets.AWS_LAMBDA_ROLE }}
+        run: AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION} AWS_LAMBDA_ROLE=${AWS_LAMBDA_ROLE} bash .github/workflows/aws_deploy/run.sh

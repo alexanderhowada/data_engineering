@@ -4,7 +4,7 @@
 set -e
 
 PACKAGE=.github/workflows/aws_deploy/package/python
-mkdir -p PACKAGE
+mkdir -p ${PACKAGE}
 
 bash create_wheel.sh
 

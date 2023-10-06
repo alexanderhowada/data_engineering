@@ -23,6 +23,22 @@ provider "aws" {}
 #     name="iam_role.test_role.name"
 # }
 
+terraform {
+  required_providers {
+      aws = {
+        source  = "hashicorp/aws"
+        version = ">= 4.0"
+      }
+  }
+  backend "s3" {
+    bucket="ahow-delta-lake"
+    key="terraform/terraform.tfstate"
+    encrypt=true
+    dynamodb_table="terraform_state_standard"
+  }
+}
+
+
 resource "aws_lambda_layer_version" "data_engineering" {
     filename="lambda_layer.zip"
     compatible_runtimes=["python3.11"]

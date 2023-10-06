@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  continuous deployment:
+  continuous_deployment:
     name: cd
     runs-on: ubuntu-latest
     steps:
